@@ -47,7 +47,7 @@ class Uebot
                 break;
             case 'answer_text':
                 $reply_markup = $this->process_python_keyboard($action['data']['reply_markup']);
-                $this->process_python_vars($action['data']['message_text']);
+                $action['data']['message_text'] = $this->process_python_vars($action['data']['message_text']);
                 $handler_code .= $this->tab($cursor) . $action['var'] . ' = await message.answer("' . $action['data']['message_text'] . '", reply_markup=' . $reply_markup . ')' . "\n";
                 break;
             case 'delete_handler_message':
