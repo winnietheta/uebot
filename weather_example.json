@@ -1,0 +1,111 @@
+{
+  "bot_token": "TOKEN",
+  "handlers": [
+    {
+      "name": "start",
+      "type": "command",
+      "actions": [
+        {
+          "type": "delete_handler_message",
+          "var": "del_message"
+        },
+        {
+          "type": "answer_text",
+          "data": {
+            "message_text": "<b>\uD83D\uDC4B Выберите город для просмотра погоды, нажав на кнопку ниже</b>",
+            "reply_markup": "cities"
+          },
+          "var": "hw_message"
+        }
+      ]
+    },
+    {
+      "name": "moscow",
+      "type": "callback",
+      "actions": [
+        {
+          "type": "answer_text",
+          "data": {
+            "message_text": "<b>\uD83C\uDF06 Люберцы. Температура: 228 градусов Цельсия</b>",
+            "reply_markup": "cities"
+          },
+          "var": "hw_message"
+        }
+      ]
+    },
+    {
+      "name": "petersburg",
+      "type": "callback",
+      "actions": [
+        {
+          "type": "http_get_json",
+          "url": "https://api.open-meteo.com/v1/forecast?latitude=59.933505&longitude=30.328543&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m",
+          "var": "weather"
+        },
+        {
+          "type": "answer_text",
+          "data": {
+            "message_text": "<b>\uD83C\uDF06 Санкт-Петербург. Температура: ||weather['current']['temperature_2m']|| градусов Цельсия</b>",
+            "reply_markup": "cities"
+          },
+          "var": "hw_message"
+        }
+      ]
+    },
+    {
+      "name": "cherepovets",
+      "type": "callback",
+      "actions": [
+        {
+          "type": "http_get_json",
+          "url": "https://api.open-meteo.com/v1/forecast?latitude=59.090469&longitude=37.893580&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m",
+          "var": "weather"
+        },
+        {
+          "type": "answer_text",
+          "data": {
+            "message_text": "<b>\uD83C\uDF06 Череповец. Температура: ||weather['current']['temperature_2m']|| градусов Цельсия</b>",
+            "reply_markup": "cities"
+          },
+          "var": "hw_message"
+        }
+      ]
+    }
+  ],
+  "keyboards": [
+    {
+      "name": "cities",
+      "type": "inline",
+      "buttons": [
+        {
+          "type": "callback",
+          "data": {
+            "callback_data": "moscow",
+            "button_text": "Люберцы"
+          }
+        },
+        {
+          "type": "callback",
+          "data": {
+            "callback_data": "petersburg",
+            "button_text": "Санкт-Петербург, ул. Думская"
+          }
+        },
+        {
+          "type": "callback",
+          "data": {
+            "callback_data": "cherepovets",
+            "button_text": "Череповец, зашекснинский лес"
+          }
+        },
+        {
+          "type": "url",
+          "data": {
+            "url": "https://google.com",
+            "button_text": "ЭЭЭ МОЕГО ГОРОДА НЕТ"
+          }
+        }
+      ]
+    }
+  ]
+}
