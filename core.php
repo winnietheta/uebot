@@ -118,7 +118,7 @@ class Uebot
                     }
                     break;
                 case 'callback':
-                    $handler_code .= "@router.callback_query(F.data == '" . $handler['name'] . "')\nasync def " . $handler['name'] . "(message: types.CallbackQuery):\n" . tab(1) . "await message.answer()\n" . tab(1) . "message = message.message\n";
+                    $handler_code .= "@router.callback_query(F.data == '" . $handler['name'] . "')\nasync def " . $handler['name'] . "(message: types.CallbackQuery):\n" . $this->tab(1) . "await message.answer()\n" . $this->tab(1) . "message = message.message\n";
                     foreach ($handler['actions'] as $action) {
                         $handler_code = $this->process_action($cursor, $handler_code, $action);
                         file_put_contents($this->python_bot_dir . '/src/handlers/' . $handler['name'] . '.py', $handler_code);
